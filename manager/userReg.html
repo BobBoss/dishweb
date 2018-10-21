@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="Generator" content="EditPlus®">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>Document</title>
+	<script type="text/javascript">
+		var httpRequest = new XMLHttpRequest();
+		function check() {
+			var url = "check.jsp?un=" + frm.username.value;
+			httpRequest.open("GET", url, true);
+			httpRequest.send();
+			httpRequest.onreadystatechange = response;
+		}
+		function response() {
+			if (httpRequest.readyState == 4 && httpRequest.status == 200) {
+				var r = httpRequest.responseText;
+				if (r == "true") {
+					document.getElementById("check_result").innerHTML = "此用户名可以注册";
+					frm.submitBtn.disabled = false;
+				} else {
+					document.getElementById("check_result").innerHTML = "此用户名已存在，请更换用户名";
+					frm.submitBtn.disabled = true;
+				}
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<form method="post" action="login.jsp" name="frm">
+		用户名：
+		<input type="text" name="username" onblur="check()">
+		<span id="check_result"></span>
+		<br> 密码:
+		<input type="password" name="pwd">
+		<br> 出生日期:
+		<input type="date" name="birthday">
+		<br>
+
+		<iframe src="upload1.html" frameborder=0 width="400" height=40></iframe>
+		<input type="hidden" name="attachement">
+		<br>
+		<span id="filesDiv"></span>
+		<br>
+		<input type="submit" name="submitBtn">
+	</form>
+</body>
+
+</html>
